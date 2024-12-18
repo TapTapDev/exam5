@@ -1,0 +1,65 @@
+
+-- ======================================= 1 Task =============================
+
+create table departments(
+    id bigserial primary key ,
+    name varchar(255) not null ,
+    head_id int
+);
+
+drop table departments cascade ;
+
+create table professors(
+    id bigserial primary key ,
+    name varchar(60),
+    department_id int references departments
+);
+
+create table students(
+    id bigserial primary key ,
+    name varchar(60),
+    groupp varchar(60)
+);
+
+create table enrollments(
+    id bigserial primary key ,
+    student_id int references students,
+    professor_id int references professors,
+    course_name varchar(50),
+    grade int
+);
+
+
+
+-- ===================================== Task 3 ==================================================
+select p.name as professor_name,
+    count(e.student_id) as graded_total from professors p inner join enrollments e on p.id = e.professor_id group by p.name
+order by professor_name;
+
+-- ====================================== Task 4 ===================================================
+
+select s.groupp as group_name,count(s.id) AS student_count from students s
+    inner join enrollments e on s.id = e.student_id
+group by s.groupp order by group_name;
+
+-- ====================================== Task 5 ==================================================
+
+-- ====================================== Task 6 ==================================================
+
+-- =====================================  Task 7 ==================================================
+
+-- urolov@slizerin:~/home/urolov/PycharmProjects/PythonProject1/back_up sudo shown "$postgres:postgres" back_up/
+-- shu papka uchun postgres ga ruxsat berdim shu kode orqali
+-- urolov@slizerin:~/PycharmProjects sudo -i -u postgres pg_dump -U postgres -d university -F tar -f /home/urolov/PycharmProjects/PythonProject1/back_up/university.tar
+-- shu code orqali ko'rsatgan mazilim orqali university database da university.tar fayl orqali hamma malumotni yukladim
+-- yani backups oldim
+-- urolov@slizerin:~/PycharmProjects/back_up sudo chmod 777 university.tar
+-- bu kod orqali backups filega hamma narsaruxsat berdim
+-- 'pg_restore -U username -d university --data-only --table=students university_backup.tar'
+-- bu orqali faqat student jadvalini qayta tikladim
+
+
+
+
+
+
